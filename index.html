@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow | Daily Study Tracker</title>
+    <meta name="description" content="Track your daily study hours with a beautiful, interactive stopwatch and line chart. Optimize your learning productivity.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <div class="brand">
+                    <img src="logo.png" alt="StudyFlow Logo" class="logo-img">
+                    <h1>StudyFlow</h1>
+                </div>
+                <div class="live-clock-wrapper">
+                    <div id="liveClock" class="live-time">00:00:00</div>
+                    <div id="liveDate" class="live-date">Monday, January 1, 2024</div>
+                </div>
+                <div class="month-selector-wrapper">
+                    <label for="monthSelect">Month</label>
+                    <input type="month" id="monthSelect" class="month-input">
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <span class="label">Total Study Time</span>
+                    <span id="totalHours" class="value">0.0h</span>
+                </div>
+                <div class="summary-card">
+                    <span class="label">Daily Average</span>
+                    <span id="dailyAvg" class="value">0.0h</span>
+                </div>
+                <div class="summary-card">
+                    <span class="label">Days Tracked</span>
+                    <span id="daysTracked" class="value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Timer Section -->
+            <section class="timer-section card">
+                <div class="timer-display" id="display">00:00:00</div>
+                <div class="timer-controls">
+                    <button id="startBtn" class="btn btn-primary">Start</button>
+                    <button id="pauseBtn" class="btn btn-secondary" disabled>Pause</button>
+                    <button id="resetBtn" class="btn btn-outline">Reset</button>
+                </div>
+                <button id="logBtn" class="btn btn-accent full-width">Log Today's Session</button>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section card">
+                <h3>Study Hours Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="studyChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Table Section -->
+            <section class="log-section card">
+                <div class="section-header">
+                    <h3>Daily Log</h3>
+                    <button id="addRowBtn" class="btn btn-small btn-secondary">+ Add Entry</button>
+                </div>
+                <div class="table-responsive">
+                    <table id="logTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Hours</th>
+                                <th>Notes</th>
+                                <th class="actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="logBody">
+                            <!-- Rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 StudyFlow Tracker. Your data is stored locally.</p>
+        </footer>
+    </div>
+
+    <!-- Modal for adding/editing entries -->
+    <div id="entryModal" class="modal">
+        <div class="modal-content card">
+            <h2 id="modalTitle">Add Entry</h2>
+            <form id="entryForm">
+                <input type="hidden" id="editIndex">
+                <div class="form-group">
+                    <label for="entryDate">Date</label>
+                    <input type="date" id="entryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="entryHours">Hours</label>
+                    <input type="number" id="entryHours" step="0.1" min="0" max="24" required>
+                </div>
+                <div class="form-group">
+                    <label for="entryNotes">Notes</label>
+                    <textarea id="entryNotes" placeholder="What did you study today?"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="closeModal" class="btn btn-outline">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
